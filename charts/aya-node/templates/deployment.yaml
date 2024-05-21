@@ -56,6 +56,7 @@ spec:
             {{- if .Values.ayaNode.isValidator | default false }}
             - --validator
             {{- end }}
+            - --prometheus-external
             - --chain
             - /aya/wm-devnet-chainspec.json
             - --port
@@ -82,12 +83,17 @@ spec:
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /
+              path: /metrics
               port: http
           readinessProbe:
             httpGet:
-              path: /
-              port: http
+              path: /metrics
+              port: prom
+          startupProbe:
+            httpGet:
+              path: /metrics
+              port: prom
+            initialDelaySeconds: 15
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
