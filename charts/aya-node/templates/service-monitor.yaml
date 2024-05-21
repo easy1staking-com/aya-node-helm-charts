@@ -1,0 +1,17 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ .Release.Name }}-service-monitor
+  labels:
+    io.kompose.service: {{ .Release.Name }}
+    release: kube-prometheus-stack
+spec:
+  endpoints:
+    - path: /health
+      port: "1442"
+  namespaceSelector:
+    matchNames:
+      - {{ .Release.Namespace }}
+  selector:
+    matchLabels:
+      io.kompose.service: {{ .Release.Name }}
