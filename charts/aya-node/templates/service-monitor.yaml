@@ -1,17 +1,17 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: {{ .Release.Name }}-service-monitor
+  name: {{ include "aya-node.serviceAccountName" . }}
   labels:
-    io.kompose.service: {{ .Release.Name }}
+    {{- include "aya-node.labels" . | nindent 4 }}
     release: kube-prometheus-stack
 spec:
   endpoints:
-    - path: /health
-      port: "1442"
+    - path: /metrics
+      port: prom
   namespaceSelector:
     matchNames:
       - {{ .Release.Namespace }}
   selector:
     matchLabels:
-      io.kompose.service: {{ .Release.Name }}
+      {{- include "aya-node.labels" . | nindent 6 }}
