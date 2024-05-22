@@ -85,3 +85,7 @@ ayaNode:
   enabled: true
   maintenance: false
   isValidator: false
+
+# Requires Prometheus Stack installed
+monitoring:
+  enabled: false
