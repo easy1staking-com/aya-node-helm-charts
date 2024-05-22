@@ -39,6 +39,8 @@ securityContext: {}
 service:
   type: ClusterIP
   port: 30333
+  # Only set if type is NodePort
+  nodePort: 30333
 
 ingress:
   enabled: false

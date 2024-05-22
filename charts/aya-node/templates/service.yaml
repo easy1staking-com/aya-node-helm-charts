@@ -12,6 +12,9 @@ spec:
       targetPort: p2p
       protocol: TCP
       name: p2p
+      {{- if and .Values.service.nodePort ( eq .Values.service.type "NodePort" )}}
+      nodePort: {{ .Values.service.nodePort }}
+      {{- end }}
   selector:
     {{- include "aya-node.selectorLabels" . | nindent 4 }}
 ---
@@ -22,7 +25,7 @@ metadata:
   labels:
     {{- include "aya-node.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.service.type }}
+  type: ClusterIP
   ports:
     - port: 9933
       targetPort: rpc
