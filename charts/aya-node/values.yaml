@@ -38,9 +38,14 @@ securityContext: {}
 
 service:
   type: ClusterIP
+  # P2P Port
   port: 30333
-  # Only set if type is NodePort
+  # P2P NodePort, only set if type is NodePort
   nodePort: 30333
+  # Rpc Port
+  rpcPort: 9933
+  # Enable connection to rpc from outside container (unsafe)
+  unsafeRpcExternalEnabled: false
 
 ingress:
   enabled: false

@@ -27,14 +27,12 @@ metadata:
 spec:
   type: ClusterIP
   ports:
-    - port: 9933
+    {{- if .Values.service.unsafeRpcExternalEnabled }}
+    - port: {{ .Values.service.rpcPort }}
       targetPort: rpc
       protocol: TCP
       name: rpc
-    - port: 9944
-      targetPort: ws
-      protocol: TCP
-      name: ws
+    {{- end }}
     - port: 9615
       targetPort: prom
       protocol: TCP

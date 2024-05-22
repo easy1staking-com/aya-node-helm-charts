@@ -38,9 +38,9 @@ spec:
             - name: BASE_PATH
               value: {{ .Values.basePath | default "/aya/data/validator" }}
             - name: PORT
-              value: {{ .Values.port | quote }}
+              value: {{ .Values.service.port | quote }}
             - name: RPC_PORT
-              value: {{ .Values.rpcPort | quote }}
+              value: {{ .Values.service.rpcPort | quote }}
             - name: LOG_LEVEL
               value: {{ .Values.logLevel | default "info" }}
             - name: BOOT_NODES
@@ -56,7 +56,7 @@ spec:
             {{- if .Values.ayaNode.isValidator | default false }}
             - --validator
             {{- end }}
-            {{- if .Values.service.rpcEnabled }}
+            {{- if .Values.service.unsafeRpcExternalEnabled }}
             - --unsafe-rpc-external
             {{- end }}
             - --prometheus-external
@@ -73,10 +73,10 @@ spec:
           {{- end }}
           ports:
             - name: p2p
-              containerPort: {{ .Values.port }}
+              containerPort: {{ .Values.service.port }}
               protocol: TCP
             - name: rpc
-              containerPort: {{ .Values.rpcPort }}
+              containerPort: {{ .Values.service.rpcPort }}
               protocol: TCP
             - name: prom
               containerPort: 9615
