@@ -99,10 +99,10 @@ spec:
           volumeMounts:
             - name: {{ .Release.Name }}-db
               mountPath: /aya/data/validator
-          {{- if .Values.isValidator }}
-          - name: secret-keys
-            mountPath: /aya/data/validator/chains/aya_devnet/keystore
-          {{- end }}
+            {{- if .Values.isValidator }}
+            - name: secret-keys
+              mountPath: /aya/data/validator/chains/aya_devnet/keystore
+            {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
